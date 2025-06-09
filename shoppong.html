@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>購物車</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="mb-4">🛒 我的購物車</h1>
+    
+    <div id="cart-items"></div>
+    
+    <div class="mt-4">
+      <h4 id="cart-total" class="text-end text-danger"></h4>
+    </div>
+    
+    <div class="text-center mt-5">
+      <a href="http://127.0.0.1:5500/%E9%A6%96%E9%A0%81.html?" class="btn btn-secondary">⬅ 回首頁繼續購物</a>
+    </div>
+  </div>
+
+  <script>
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      cartItems.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p class='text-center'>🛒 購物車是空的！</p>";
+        cartTotal.textContent = "";
+        return;
+      }
+
+      let total = 0;
+      const table = document.createElement("table");
+      table.className = "table table-bordered text-center align-middle";
+
+      const thead = `
+        <thead class="table-light">
+          <tr>
+            <th>商品名稱</th>
+            <th>單價</th>
+            <th>數量</th>
+            <th>小計</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      `;
+      const tbody = document.createElement("tbody");
+
+      cart.forEach((item, index) => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>$${item.price}</td>
+          <td>${item.qty}</td>
+          <td>$${subtotal}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="removeItem(${index})">刪除</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      table.innerHTML = thead;
+      table.appendChild(tbody);
+      cartItems.appendChild(table);
+
+      cartTotal.textContent = `總金額：$${total}`;
+    }
+
+    function removeItem(index) {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    document.addEventListener("DOMContentLoaded", renderCart);
+  </script>
+</body>
+</html>

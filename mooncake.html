@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>中秋禮品預購</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .hero-banner {
+            background: url('https://via.placeholder.com/1200x500?text=%E6%BD%AE%E5%93%81%E8%BF%8E%E5%A4%8F%E7%A5%AD') no-repeat center center;
+            background-size: cover;
+            height: 500px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        .feature-button {
+            border-radius: 50px;
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+        }
+
+        .blue-bg {
+            background-color: #0055aa;
+            color: white;
+        }
+
+        .blue-bg:hover {
+            background-color: #003f7f;
+            color: white;
+        }
+
+        .feature-button {
+            border-radius: 50px;
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            background-color: #2c4754;
+            /* 橘色背景 */
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .feature-button:hover {
+            background-color: #fdc254;
+            color: black;
+        }
+
+        .hero-banner {
+            margin-bottom: 4rem;
+            /* 或你喜歡的間距 */
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background-color: white;
+            /* 加個背景讓空白區塊不突兀 */
+        }
+
+        .card {
+            background: linear-gradient(to bottom right, #fffdf5, #fef1e6);
+            /* 淡米色漸層 */
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #rankingCarousel {
+            position: relative;
+        }
+
+        #rankingCarousel,
+        .carousel,
+        .carousel-inner {
+            overflow: visible;
+            position: relative;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+
+        .carousel-control-prev {
+            left: -3rem;
+        }
+
+        .carousel-control-next {
+            right: -3rem;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(1);
+        }
+
+        #limited-offer .card-img-top {
+            height: 200px;
+            object-fit: contain;
+            background-color: white;
+        }
+
+
+        body {
+            background-color: #ccb18f;
+            color: #333;
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+
+        /* 其他樣式... */
+
+
+        .time-box {
+            width: 60px;
+            height: 60px;
+            background-color: #212529;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .colon {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #212529;
+        }
+
+        .card-hover {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .card-hover:hover {
+            animation: breathing 1.5s infinite;
+        }
+
+        @keyframes breathing {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .card-body {
+            position: relative;
+        }
+
+        .cart-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .card-img-top:hover {
+            animation: breathing 1.5s infinite;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- 🔝 導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- 商品分類 -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link "
+                            href="http://127.0.0.1:5500/%E6%9C%88%E9%A4%85%E7%A6%AE%E7%9B%92.html">月餅禮盒</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">蛋黃酥禮盒</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">鳳梨酥禮盒</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">堅果禮盒</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">日本禮盒</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="http://127.0.0.1:5500/%E9%A6%96%E9%A0%81.html">回首頁</a>
+                    </li>
+
+                </ul>
+
+
+
+                <!-- 搜尋欄 -->
+                <form class="d-flex me-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search"
+                        style="max-width: 200px;">
+                    <button class="btn btn-light" type="submit">搜尋</button>
+                </form>
+
+                <!-- 購物車 / 登入 -->
+                <a href="http://127.0.0.1:5500/%E8%B3%BC%E7%89%A9%E8%BB%8A%E9%A0%81%E9%9D%A2.html"
+                    class="btn btn-outline-light me-2 position-relative">🛒 購物車
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                        id="cart-count">
+                        0
+                    </span>
+                </a>
+                <a href="#" class="btn btn-light">登入</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🔰 主視覺 Banner -->
+    <div class="hero-banner" style="margin-top: 80px;">
+        <img src="./banner.png" alt="中秋禮品預購" class="img-fluid">
+    </div>
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">月餅禮盒</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/三統-芋泥.jpg" class="img-cover" alt="cover" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">芋泥流心月餅禮盒</h5>
+                        <p class="card-text">產品內容：9入</p>
+                        <p class="card-text">外盒尺寸：20*15*12cm</p>
+                        <p class="card-text">保存方法：常溫保存14天</p>
+                        <p class="fw-bold text-danger mt-auto">$799</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product18" data-name="芋泥流心月餅禮盒"
+                            data-price="799">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/四式月餅.jpg" class="card-img-top" alt="月餅1" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">四式月餅禮盒</h5>
+                        <p class="card-text">產品內容：8入</p>
+                        <p class="card-text">外盒尺寸：25*8*5cm</p>
+                        <p class="card-text">保存方法：常溫保存14天</p>
+                        <p class="fw-bold text-danger mt-auto">$999</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product19" data-name="四式月餅禮盒"
+                            data-price="999">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/寶可夢月餅.jpg" class="card-img-top" alt="月餅1" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">寶可夢月餅禮盒</h5>
+                        <p class="card-text">產品內容：8入</p>
+                        <p class="card-text">外盒尺寸：25*8*5cm</p>
+                        <p class="card-text">保存方法：常溫保存14天</p>
+                        <p class="fw-bold text-danger mt-auto">$1099</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product5" data-name="寶可夢月餅禮盒"
+                            data-price="1099">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/美心 四式.jpg" class="card-img-top" alt="月餅1">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">流心四式月餅禮盒</h5>
+                        <p class="card-text">產品內容：8入</p>
+                        <p class="card-text">外盒尺寸：20*15*12cm</p>
+                        <p class="card-text">保存方法：常溫保存30天</p>
+                        <p class="fw-bold text-danger mt-auto">$899</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product20" data-name="流心四式月餅禮盒"
+                            data-price="899">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/美心 雙式.jpg" class="card-img-top" alt="月餅1">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">雙式月餅禮盒</h5>
+                        <p class="card-text">產品內容：6入</p>
+                        <p class="card-text">外盒尺寸：20*15*12cm</p>
+                        <p class="card-text">保存方法：常溫保存30天</p>
+                        <p class="fw-bold text-danger mt-auto">$799</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product21" data-name="雙式月餅禮盒"
+                            data-price="799">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/流心千層酥禮盒6入＿大檔無二.jpg" class="card-img-top" alt="月餅1"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">流心千層酥禮盒</h5>
+                        <p class="card-text">產品內容：6入</p>
+                        <p class="card-text">外盒尺寸：15*15*10cm</p>
+                        <p class="card-text">保存方法：常溫保存30天</p>
+                        <p class="fw-bold text-danger mt-auto">$799</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product6" data-name="流心千層酥禮盒"
+                            data-price="799">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/美心-東方之珠.jpg" class="card-img-top" alt="月餅1"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">東方之珠月餅禮盒</h5>
+                        <p class="card-text">產品內容：6入</p>
+                        <p class="card-text">外盒尺寸：30*25*10cm</p>
+                        <p class="card-text">保存方法：常溫保存30天</p>
+                        <p class="fw-bold text-danger mt-auto">$1299</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product7"
+                        data-name="東方之珠禮盒" data-price="1299">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/特賞雙輝.jpg" class="card-img-top" alt="月餅1" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">特賞雙輝月餅禮盒</h5>
+                        <p class="card-text">產品內容：8入</p>
+                        <p class="card-text">外盒尺寸：25*8*5cm</p>
+                        <p class="card-text">保存方法：常溫保存14天</p>
+                        <p class="fw-bold text-danger mt-auto">$1699</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product22"
+                        data-name="特賞雙輝禮盒" data-price="1699">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card card-hover h-100">
+                    <img src="./月餅/迷你奶皇.jpg" class="card-img-top" alt="月餅1" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">迷你奶皇月餅禮盒</h5>
+                        <p class="card-text">產品內容：8入</p>
+                        <p class="card-text">外盒尺寸：25*8*5cm</p>
+                        <p class="card-text">保存方法：常溫保存14天</p>
+                        <p class="fw-bold text-danger mt-auto">$1799</p>
+                        <div class="mb-2">
+                            <label>數量：</label>
+                            <select class="form-select form-select-sm product-qty" style="width: 80px;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-primary cart-btn" data-id="product23"
+                        data-name="東方之珠禮盒" data-price="1799">加入購物車</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+    <script>
+        document.querySelectorAll('.feature-button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+    <button id="backToTopBtn" title="回到頂部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <style>
+        #backToTopBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 30px;
+            z-index: 99;
+            font-size: 1.5rem;
+            background-color: #2c4754;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        #backToTopBtn:hover {
+            background-color: #fdc254;
+            color: black;
+        }
+    </style>
+
+    <script>
+        window.onscroll = function () {
+            const btn = document.getElementById("backToTopBtn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+
+        document.getElementById("backToTopBtn").addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+    <script>
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let total = 0;
+            cart.forEach(item => {
+                total += item.qty;
+            });
+
+            document.getElementById("cart-count").textContent = total;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartCount(); // 頁面一載入就更新
+
+            const buttons = document.querySelectorAll(".cart-btn");
+
+            buttons.forEach((btn) => {
+                btn.addEventListener("click", function () {
+                    const id = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = parseInt(this.dataset.price);
+
+                    // 找到同一個卡片內的 input 數量欄位
+                    const cardBody = this.closest('.card-body');
+                    const qtyInput = cardBody.querySelector('.product-qty');
+                    const qty = parseInt(qtyInput.value, 10) || 1; // 預設最少是 1
+
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                    const existing = cart.find(item => item.id === id);
+                    if (existing) {
+                        existing.qty += qty; // ✅ 改為加選擇的數量
+                    } else {
+                        cart.push({ id, name, price, qty });
+                    }
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    updateCartCount(); // 更新數字
+                    alert(`✅ 已加入購物車：${name} × ${qty}`);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
